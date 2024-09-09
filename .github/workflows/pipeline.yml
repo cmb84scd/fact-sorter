@@ -21,7 +21,6 @@ jobs:
         include_passed: true
         annotate_only: true
         detailed_summary: true
-        job_summary: false
 
   lint:
     runs-on: ubuntu-latest
