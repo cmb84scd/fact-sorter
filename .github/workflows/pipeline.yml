@@ -18,6 +18,7 @@ jobs:
       if: success() || failure()
       with:
         report_paths: 'reports/unit_test_report.xml'
+        include_passed: true
 
   lint:
     runs-on: ubuntu-latest
