@@ -1,0 +1,33 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: just ruff
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: format
+        name: format
+        entry: just format
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: safety
+        name: safety
+        entry: just safety
+        language: system
+        files: poetry.lock
+        pass_filenames: false
+      - id: bandit
+        name: bandit
+        entry: just bandit
+        language: system
+        files: (^\.bandit|^animal_fact_api/)$
+        pass_filenames: false
+      # - id: test
+      #   name: test
+      #   entry: just test-cov
+      #   language: system
+      #   files: (^\.coveragerc|\.py)$
+      #   pass_filenames: false
