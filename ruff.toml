@@ -1,5 +1,5 @@
 exclude = [".git", ".history", ".venv"]
-src = ["animal_fact_api"]
+src = ["eventbus_learning"]
 
 target-version = "py312"
 line-length = 79

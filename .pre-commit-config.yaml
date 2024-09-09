@@ -23,11 +23,11 @@ repos:
         name: bandit
         entry: just bandit
         language: system
-        files: (^\.bandit|^animal_fact_api/)$
+        files: (^\.bandit|^eventbus_learning/)$
         pass_filenames: false
-      # - id: test
-      #   name: test
-      #   entry: just test-cov
-      #   language: system
-      #   files: (^\.coveragerc|\.py)$
-      #   pass_filenames: false
+      - id: test
+        name: test
+        entry: just test
+        language: system
+        files: (^pytest\.ini|^\.coveragerc|\.py)$
+        pass_filenames: false
