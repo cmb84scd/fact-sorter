@@ -19,6 +19,8 @@ jobs:
       with:
         report_paths: 'reports/unit_test_report.xml'
         include_passed: true
+        check_annotations: true
+        detailed_summary: true
 
   lint:
     runs-on: ubuntu-latest
