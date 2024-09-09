@@ -23,7 +23,7 @@ select = [
 ]
 
 [lint.per-file-ignores]
-"**/tests/*" = ["D"]
+"tests/*" = ["D"]
 
 [lint.pydocstyle]
 convention = "pep257"
