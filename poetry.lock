@@ -911,24 +911,6 @@ pluggy = ">=1.5,<2"
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
-name = "pytest-cov"
-version = "5.0.0"
-description = "Pytest plugin for measuring coverage."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "pytest-cov-5.0.0.tar.gz", hash = "sha256:5837b58e9f6ebd335b0f8060eecce69b662415b16dc503883a02f45dfeb14857"},
-    {file = "pytest_cov-5.0.0-py3-none-any.whl", hash = "sha256:4f0764a1219df53214206bf1feea4633c3b558a2925c8b59f144f682861ce652"},
-]
-
-[package.dependencies]
-coverage = {version = ">=5.2.1", extras = ["toml"]}
-pytest = ">=4.6"
-
-[package.extras]
-testing = ["fields", "hunter", "process-tests", "pytest-xdist", "virtualenv"]
-
-[[package]]
 name = "pytest-env"
 version = "1.1.4"
 description = "pytest plugin that allows you to add environment variables."
@@ -1316,4 +1298,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "9cd9eb7bb37e5980f179621f66ba53713068f9b65b908884abae73eda9e9be84"
+content-hash = "1efd8819d6c760fd0f6d436cc5f72d90cde42dbd9589ebd635ed18646e1c578d"
