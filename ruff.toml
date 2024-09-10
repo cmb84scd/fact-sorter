@@ -1,0 +1,29 @@
+exclude = [".git", ".history", ".venv"]
+src = ["eventbus_learning"]
+
+target-version = "py312"
+line-length = 79
+
+[lint]
+select = [
+    # flake8-bugbear
+    "B",
+    # pydocstyle
+    "D",
+    # pycodestyle
+    "E", "W",
+    # Pyflakes
+    "F",
+    # isort
+    "I",
+    # flake8-print
+    "T20",
+    # pyupgrade
+    "UP"
+]
+
+[lint.per-file-ignores]
+"tests/*" = ["D"]
+
+[lint.pydocstyle]
+convention = "pep257"

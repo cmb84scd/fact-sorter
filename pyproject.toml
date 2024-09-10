@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "eventbus-learning"
+version = "0.1.0"
+description = "Simple Eventbus project for learning purposes."
+authors = ["Catriona Bennett <catrionamairi@blueyonder.co.uk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.9"
+coverage = "^7.6.1"
+pre-commit = "^3.8.0"
+pytest = "^8.3.2"
+pytest-env = "^1.1.4"
+ruff = "^0.6.4"
+safety = "^3.2.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
