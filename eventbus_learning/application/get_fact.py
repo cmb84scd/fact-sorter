@@ -15,9 +15,10 @@ class GetFactFunction:
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.INFO)
 
-    # def execute(self):
-    #     """Log out the fact."""
-    #     pass
+    def execute(self):
+        """Log out the fact."""
+        fact = self.get_fact()
+        self.logger.info("The random animal fact is:", fact)
 
     def get_fact(self):
         """Get an animal fact and remove id from response."""

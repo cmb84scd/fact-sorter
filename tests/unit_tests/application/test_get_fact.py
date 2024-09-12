@@ -26,3 +26,15 @@ class TestHandler:
         requests_mock.get(url, json=response, status_code=200)
 
         assert handler.get_fact() == {"animal": "cat", "fact": "A cat fact."}
+
+    def test_logs_out_the_fact(self, handler):
+        handler.get_fact = MagicMock(
+            return_value={"animal": "cat", "fact": "A cat fact."}
+        )
+
+        handler.execute()
+
+        handler.logger.info.assert_called_once_with(
+            "The random animal fact is:",
+            {"animal": "cat", "fact": "A cat fact."},
+        )
