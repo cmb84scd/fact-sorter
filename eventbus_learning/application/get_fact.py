@@ -26,3 +26,6 @@ class GetFactFunction:
         res = response.json()
         res.pop("id")
         return res
+
+
+handler = GetFactFunction.execute

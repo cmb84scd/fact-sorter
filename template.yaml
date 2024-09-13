@@ -15,4 +15,4 @@ Resources:
   GetFactFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: application.get_fact.GetFactFunction
+      Handler: application.get_fact.execute
