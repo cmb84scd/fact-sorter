@@ -17,7 +17,7 @@ class GetFactFunction:
     def execute(self):
         """Log out the fact."""
         fact = self.get_fact()
-        self.logger.info("The random animal fact is:", fact)
+        self.logger.info("A random animal fact", fact)
 
     def get_fact(self):
         """Get an animal fact and remove id from response."""

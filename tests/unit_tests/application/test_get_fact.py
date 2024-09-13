@@ -34,9 +34,11 @@ class TestHandler:
             return_value={"animal": "cat", "fact": "A cat fact."}
         )
 
+        expected_info_log = [
+            "A random animal fact",
+            {"animal": "cat", "fact": "A cat fact."},
+        ]
+
         handler.execute()
 
-        handler.logger.info.assert_called_once_with(
-            "The random animal fact is:",
-            {"animal": "cat", "fact": "A cat fact."},
-        )
+        handler.logger.info.assert_called_once_with(*expected_info_log)
