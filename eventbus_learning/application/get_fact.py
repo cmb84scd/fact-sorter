@@ -12,8 +12,7 @@ class GetFactFunction:
         """Store the event and context, and set up the logger."""
         self.context = context
         self.event = event
-        self.logger = logging.getLogger()
-        self.logger.setLevel(logging.INFO)
+        self.logger = logging.getLogger().setLevel(logging.INFO)
 
     def execute(self):
         """Log out the fact."""

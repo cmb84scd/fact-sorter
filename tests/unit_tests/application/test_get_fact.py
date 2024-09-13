@@ -6,16 +6,18 @@ from eventbus_learning.application.get_fact import GetFactFunction
 
 
 class TestHandler:
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
+    @pytest.fixture(autouse=True)
+    def logger(self):
+        logger = logging.getLogger().setLevel(logging.INFO)
+        yield MagicMock(wraps=logger)
 
     @pytest.fixture
-    def handler(self):
+    def handler(self, logger):
         class MockLoggerHandler(GetFactFunction):
             def __init__(self, event, context):
                 super().__init__(event, context)
 
-                self.logger = MagicMock(wraps=self.logger)
+                self.logger = logger
 
         yield MockLoggerHandler(None, None)
 
