@@ -32,7 +32,6 @@ bandit:
 safety:
     poetry run safety scan
 
-test:
-    @poetry run coverage run --omit='tests/**' -m pytest tests/unit_tests
-    @poetry run coverage report -m --skip-covered && poetry run coverage html -d reports
-    @poetry run coverage xml -o reports/coverage.xml --fail-under=95
+@test:
+    poetry run coverage run && poetry run coverage report
+    poetry run coverage html && poetry run coverage xml --fail-under=95
