@@ -2,6 +2,7 @@ import logging
 from unittest.mock import MagicMock
 
 import pytest
+import requests
 from eventbus_learning.application.get_fact import GetFactFunction
 
 
@@ -28,6 +29,18 @@ class TestHandler:
         requests_mock.get(url, json=response, status_code=200)
 
         assert handler.get_fact() == {"animal": "cat", "fact": "A cat fact."}
+
+    def test_get_fact_raises_on_connection_error(self, handler, requests_mock):
+        url = "http://127.0.0.1:8000/facts"
+
+        requests_mock.get(url, exc=requests.exceptions.ConnectionError)
+
+        with pytest.raises(requests.exceptions.ConnectionError) as e:
+            handler.get_fact()
+
+        handler.logger.error.assert_called_once_with(
+            "Failed to connect to API", exception=e.value
+        )
 
     def test_logs_out_the_fact(self, handler):
         handler.get_fact = MagicMock(
