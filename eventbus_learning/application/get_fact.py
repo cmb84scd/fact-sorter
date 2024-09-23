@@ -22,12 +22,15 @@ class GetFactFunction:
     def get_fact(self):
         """Get an animal fact and remove id from response."""
         try:
-            response = requests.get("http://127.0.0.1:8000/facts")
+            response = requests.get("http://127.0.0.1:8000/facts", timeout=5)
             res = response.json()
             res.pop("id")
             return res
         except requests.exceptions.ConnectionError as e:
             self.logger.error("Failed to connect to API", exception=e)
+            raise e
+        except requests.exceptions.RequestException as e:
+            self.logger.error("Failed to get fact", exception=e)
             raise e
 
 
