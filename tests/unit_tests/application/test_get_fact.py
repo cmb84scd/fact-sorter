@@ -51,6 +51,16 @@ class TestHandler:
             "Failed to get fact", exception=e.value
         )
 
+    def test_get_fact_raises_on_no_data_returned(self, handler, requests_mock):
+        requests_mock.get(URL, status_code=404)
+
+        with pytest.raises(requests.exceptions.HTTPError) as e:
+            handler.get_fact()
+
+        handler.logger.error.assert_called_once_with(
+            "No data returned", {"Status Code": 404}, exception=e.value
+        )
+
     def test_logs_out_the_fact(self, handler):
         handler.get_fact = MagicMock(
             return_value={"animal": "cat", "fact": "A cat fact."}
