@@ -5,6 +5,8 @@ import pytest
 import requests
 from eventbus_learning.application.get_fact import GetFactFunction
 
+URL = "http://127.0.0.1:8000/facts"
+
 
 class TestHandler:
     @pytest.fixture(autouse=True)
@@ -23,17 +25,14 @@ class TestHandler:
         yield MockLoggerHandler(None, None)
 
     def test_returns_an_animal_fact(self, handler, requests_mock):
-        url = "http://127.0.0.1:8000/facts"
         response = {"id": 1, "animal": "cat", "fact": "A cat fact."}
 
-        requests_mock.get(url, json=response, status_code=200)
+        requests_mock.get(URL, json=response, status_code=200)
 
         assert handler.get_fact() == {"animal": "cat", "fact": "A cat fact."}
 
     def test_get_fact_raises_on_connection_error(self, handler, requests_mock):
-        url = "http://127.0.0.1:8000/facts"
-
-        requests_mock.get(url, exc=requests.exceptions.ConnectionError)
+        requests_mock.get(URL, exc=requests.exceptions.ConnectionError)
 
         with pytest.raises(requests.exceptions.ConnectionError) as e:
             handler.get_fact()
@@ -43,9 +42,7 @@ class TestHandler:
         )
 
     def test_get_fact_raises_on_timeout_error(self, handler, requests_mock):
-        url = "http://127.0.0.1:8000/facts"
-
-        requests_mock.get(url, exc=requests.exceptions.Timeout)
+        requests_mock.get(URL, exc=requests.exceptions.Timeout)
 
         with pytest.raises(requests.exceptions.RequestException) as e:
             handler.get_fact()
