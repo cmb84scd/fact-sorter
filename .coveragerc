@@ -1,0 +1,13 @@
+[run]
+source = eventbus_learning
+command_line = -m pytest
+
+[report]
+show_missing = True
+skip_empty = True
+
+[html]
+directory = reports
+
+[xml]
+output = reports/coverage.xml
