@@ -13,15 +13,15 @@ requests = "^2.32.3"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "^1.7.10"
-boto3 = "^1.35.25"
-botocore = "^1.35.25"
+boto3 = "^1.35.34"
+botocore = "^1.35.34"
 cfn-lint = "^1.16.0"
 coverage = "^7.6.1"
-pre-commit = "^3.8.0"
+pre-commit = "^4.0.0"
 pytest = "^8.3.3"
 pytest-env = "^1.1.5"
-ruff = "^0.6.7"
-safety = "^3.2.7"
+ruff = "^0.6.9"
+safety = "^3.2.8"
 requests-mock = "^1.12.1"
 
 [build-system]
