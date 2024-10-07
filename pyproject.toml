@@ -6,6 +6,8 @@ authors = ["Catriona Bennett <catrionamairi@blueyonder.co.uk>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
+aws-cdk-lib = "^2.161.1"
+constructs = "^10.3.0"
 python = "^3.12"
 requests = "^2.32.3"
 
