@@ -15,7 +15,7 @@ class EventbusLearningStack(Stack):
         lambda_.Function(
             self,
             "GetFactFunction",
-            runtime=lambda_.Runtime.PYTHON_3_12,
-            handler="get_fact.handler",
             code=lambda_.Code.from_asset("eventbus_learning/application"),
+            handler="get_fact.handler",
+            runtime=lambda_.Runtime.PYTHON_3_12,
         )
