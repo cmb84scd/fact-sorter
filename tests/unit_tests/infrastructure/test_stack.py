@@ -2,6 +2,8 @@ from aws_cdk import App
 from aws_cdk.assertions import Capture, Match, Template
 from eventbus_learning.infrastructure.stack import EventbusLearningStack
 
+from ..factories import lambda_properties
+
 app = App()
 stack = EventbusLearningStack(app, "eventbus-learning")
 template = Template.from_stack(stack)
@@ -14,12 +16,7 @@ class TestEventBusLearningStack:
     def test_get_fact_lambda_has_correct_properties(self):
         dependency_capture = Capture()
         template.has_resource_properties(
-            "AWS::Lambda::Function",
-            {
-                "Handler": "get_fact.handler",
-                "Role": {"Fn::GetAtt": [dependency_capture, "Arn"]},
-                "Runtime": "python3.12",
-            },
+            "AWS::Lambda::Function", lambda_properties(dependency_capture)
         )
 
         assert "GetFactFunctionServiceRole" in dependency_capture.as_string()
