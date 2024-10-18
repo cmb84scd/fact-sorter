@@ -32,6 +32,9 @@ bandit:
 safety:
     poetry run safety scan
 
-@test:
+test:
+    poetry run pytest
+
+@test-cov:
     poetry run coverage run && poetry run coverage report
     poetry run coverage html && poetry run coverage xml --fail-under=95

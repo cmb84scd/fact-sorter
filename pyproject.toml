@@ -6,20 +6,23 @@ authors = ["Catriona Bennett <catrionamairi@blueyonder.co.uk>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
+aws-cdk-lib = "^2.162.1"
+constructs = "^10.4.2"
 python = "^3.12"
 requests = "^2.32.3"
+python-decouple = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "^1.7.10"
-boto3 = "^1.35.25"
-botocore = "^1.35.25"
-cfn-lint = "^1.15.0"
-coverage = "^7.6.1"
-pre-commit = "^3.8.0"
+boto3 = "^1.35.43"
+botocore = "^1.35.43"
+cfn-lint = "^1.17.1"
+coverage = "^7.6.3"
+pre-commit = "^4.0.1"
 pytest = "^8.3.3"
 pytest-env = "^1.1.5"
-ruff = "^0.6.7"
-safety = "^3.2.7"
+ruff = "^0.7.0"
+safety = "^3.2.8"
 requests-mock = "^1.12.1"
 
 [build-system]
