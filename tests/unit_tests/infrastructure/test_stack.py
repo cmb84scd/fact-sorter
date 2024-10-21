@@ -26,11 +26,13 @@ class TestEventBusLearningStack:
 
     def test_get_fact_lambda_has_correct_iam_role(self):
         role_capture = Capture()
+        role = template.find_resources("AWS::IAM::Role").keys()
         template.has_resource_properties(
             "AWS::IAM::Role", iam_role_properties(role_capture)
         )
 
         assert "AWSLambdaBasicExecutionRole" in role_capture.as_string()
+        assert "GetFactFunctionServiceRole" in list(role)[0]
 
     def test_eventbus_has_correct_properties(self):
         template.has_resource_properties(
