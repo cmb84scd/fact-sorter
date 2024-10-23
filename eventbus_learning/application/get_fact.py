@@ -1,4 +1,4 @@
-"""Get an animal fact and log it out."""
+"""Get an animal fact and put it onto the eventbus."""
 
 import logging
 
@@ -8,7 +8,7 @@ from decouple import config
 
 
 class GetFactFunction:
-    """Get an animal fact and log it out."""
+    """Get an animal fact and put it onto the eventbus."""
 
     EVENT_BUS_ARN = config("EVENT_BUS_ARN")
 
@@ -21,7 +21,7 @@ class GetFactFunction:
         self.logger = logging.getLogger().setLevel(logging.INFO)
 
     def execute(self):
-        """Log out the fact."""
+        """Put the fact onto the eventbus."""
         try:
             fact = self.get_fact()
             event = {

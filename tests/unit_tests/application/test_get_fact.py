@@ -114,7 +114,8 @@ class TestHandler:
         )
         handler.execute()
 
-        # I'm using ANY as matching the exception object is not easy.
+        # I'm using ANY as matching the exception object is not easy
+        # and I don't feel it's essential to test it in detail.
         handler.logger.error.assert_called_once_with(
             "Failed to send event to eventbus", exception=ANY
         )
