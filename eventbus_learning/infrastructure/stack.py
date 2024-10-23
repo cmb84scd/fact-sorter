@@ -3,6 +3,7 @@
 from aws_cdk import Stack
 from aws_cdk import aws_events as events
 from aws_cdk import aws_lambda as lambda_
+from aws_cdk import aws_sqs as sqs
 from constructs import Construct
 
 
@@ -13,10 +14,13 @@ class EventbusLearningStack(Stack):
         """Create resources for eventbus-learning stack."""
         super().__init__(scope, construct_id, **kwargs)
 
+        dlq = sqs.Queue(self, "GetFactDLQ")
+
         lambda_.Function(
             self,
             "GetFactFunction",
             code=lambda_.Code.from_asset("eventbus_learning/application"),
+            dead_letter_queue=dlq,
             handler="get_fact.handler",
             runtime=lambda_.Runtime.PYTHON_3_12,
         )

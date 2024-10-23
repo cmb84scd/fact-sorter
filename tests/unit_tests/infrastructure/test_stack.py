@@ -14,12 +14,16 @@ class TestEventBusLearningStack:
         template.resource_count_is("AWS::Lambda::Function", 1)
         template.resource_count_is("AWS::Events::EventBus", 1)
         template.resource_count_is("AWS::Events::Rule", 1)
+        template.resource_count_is("AWS::SQS::Queue", 1)
 
     def test_get_fact_lambda_has_correct_properties(self):
         dependency_capture = Capture()
+        dlq = template.find_resources("AWS::SQS::Queue").keys()
         template.has_resource_properties(
             "AWS::Lambda::Function",
-            lambda_properties("get_fact.handler", dependency_capture),
+            lambda_properties(
+                "get_fact.handler", list(dlq)[0], dependency_capture
+            ),
         )
 
         assert "GetFactFunctionServiceRole" in dependency_capture.as_string()
