@@ -1,5 +1,5 @@
 import logging
-from unittest.mock import MagicMock
+from unittest.mock import ANY, MagicMock
 
 import pytest
 import requests
@@ -27,7 +27,7 @@ class TestHandler:
 
     @pytest.fixture
     def events_stub(self, handler):
-        with Stubber(handler.event_bus_client) as stubber:
+        with Stubber(handler.events_client) as stubber:
             yield stubber
 
         # Confirm tests made all expected requests
@@ -90,3 +90,31 @@ class TestHandler:
         handler.execute()
 
         handler.logger.info.assert_called_once_with(*expected_info_log)
+
+    def test_execute_logs_on_exception_when_get_fact_fails(self, handler):
+        exception = Exception("Failed to get fact")
+        handler.get_fact = MagicMock(side_effect=exception)
+        handler.execute()
+
+        handler.logger.error.assert_called_once_with(
+            "Failed to send event to eventbus", exception=exception
+        )
+
+    def test_execute_logs_on_exception_when_put_event_fails(
+        self, handler, events_stub
+    ):
+        events_stub.add_client_error(
+            "put_events",
+            service_error_code="InternalFailure",
+            service_message="Failed to put event",
+        )
+
+        handler.get_fact = MagicMock(
+            return_value={"animal": "cat", "fact": "A cat fact."}
+        )
+        handler.execute()
+
+        # I'm using ANY as matching the exception object is not easy.
+        handler.logger.error.assert_called_once_with(
+            "Failed to send event to eventbus", exception=ANY
+        )
