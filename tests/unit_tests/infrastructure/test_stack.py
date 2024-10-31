@@ -38,6 +38,19 @@ class TestEventBusLearningStack:
         assert "AWSLambdaBasicExecutionRole" in role_capture.as_string()
         assert "GetFactFunctionServiceRole" in list(role)[0]
 
+    def test_get_fact_lambda_has_correct_dlq_policy(self):
+        policy_capture = Capture()
+        role = template.find_resources("AWS::IAM::Role").keys()
+        policy = template.find_resources("AWS::IAM::Policy").keys()
+        template.has_resource_properties(
+            "AWS::IAM::Policy",
+            {
+                "PolicyDocument": policy_capture,
+                "PolicyName": list(policy)[0],
+                "Roles": [{"Ref": list(role)[0]}],
+            },
+        )
+
     def test_eventbus_has_correct_properties(self):
         template.has_resource_properties(
             "AWS::Events::EventBus",
