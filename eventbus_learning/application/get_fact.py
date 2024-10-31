@@ -1,12 +1,18 @@
-"""Get an animal fact and log it out."""
+"""Get an animal fact and put it onto the eventbus."""
 
 import logging
 
+import boto3
 import requests
+from decouple import config
 
 
 class GetFactFunction:
-    """Get an animal fact and log it out."""
+    """Get an animal fact and put it onto the eventbus."""
+
+    EVENT_BUS_ARN = config("EVENT_BUS_ARN")
+
+    events_client = boto3.client("events")
 
     def __init__(self, event, context):
         """Store the event and context, and set up the logger."""
@@ -15,9 +21,19 @@ class GetFactFunction:
         self.logger = logging.getLogger().setLevel(logging.INFO)
 
     def execute(self):
-        """Log out the fact."""
-        fact = self.get_fact()
-        self.logger.info("A random animal fact", fact)
+        """Put the fact onto the eventbus."""
+        try:
+            fact = self.get_fact()
+            event = {
+                "Detail": str(fact),
+                "DetailType": "fact.retrieved",
+                "EventBusName": self.EVENT_BUS_ARN,
+                "Source": "GetFactFunction",
+            }
+            self.logger.info("Sending fact to eventbus", event)
+            self.events_client.put_events(Entries=[event])
+        except Exception as e:
+            self.logger.error("Failed to send event to eventbus", exception=e)
 
     def get_fact(self):
         """Get an animal fact and remove id from response."""

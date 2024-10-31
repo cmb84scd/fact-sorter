@@ -1,8 +1,9 @@
 import logging
-from unittest.mock import MagicMock
+from unittest.mock import ANY, MagicMock
 
 import pytest
 import requests
+from botocore.stub import Stubber
 from eventbus_learning.application.get_fact import GetFactFunction
 
 URL = "http://127.0.0.1:8000/facts"
@@ -23,6 +24,14 @@ class TestHandler:
                 self.logger = logger
 
         yield MockLoggerHandler(None, None)
+
+    @pytest.fixture
+    def events_stub(self, handler):
+        with Stubber(handler.events_client) as stubber:
+            yield stubber
+
+        # Confirm tests made all expected requests
+        stubber.assert_no_pending_responses()
 
     def test_returns_an_animal_fact(self, handler, requests_mock):
         response = {"id": 1, "animal": "cat", "fact": "A cat fact."}
@@ -61,16 +70,52 @@ class TestHandler:
             "No data returned", {"Status Code": 404}, exception=e.value
         )
 
-    def test_logs_out_the_fact(self, handler):
+    def test_puts_the_fact_on_the_event_bus(self, handler, events_stub):
+        response = {"Entries": [{"EventId": "1"}], "FailedEntryCount": 0}
+        event = {
+            "Detail": "{'animal': 'cat', 'fact': 'A cat fact.'}",
+            "DetailType": "fact.retrieved",
+            "EventBusName": handler.EVENT_BUS_ARN,
+            "Source": "GetFactFunction",
+        }
+        expected_params = {"Entries": [event]}
+
+        events_stub.add_response("put_events", response, expected_params)
+
+        expected_info_log = ["Sending fact to eventbus", event]
+
         handler.get_fact = MagicMock(
             return_value={"animal": "cat", "fact": "A cat fact."}
         )
-
-        expected_info_log = [
-            "A random animal fact",
-            {"animal": "cat", "fact": "A cat fact."},
-        ]
-
         handler.execute()
 
         handler.logger.info.assert_called_once_with(*expected_info_log)
+
+    def test_execute_logs_on_exception_when_get_fact_fails(self, handler):
+        exception = Exception("Failed to get fact")
+        handler.get_fact = MagicMock(side_effect=exception)
+        handler.execute()
+
+        handler.logger.error.assert_called_once_with(
+            "Failed to send event to eventbus", exception=exception
+        )
+
+    def test_execute_logs_on_exception_when_put_event_fails(
+        self, handler, events_stub
+    ):
+        events_stub.add_client_error(
+            "put_events",
+            service_error_code="InternalFailure",
+            service_message="Failed to put event",
+        )
+
+        handler.get_fact = MagicMock(
+            return_value={"animal": "cat", "fact": "A cat fact."}
+        )
+        handler.execute()
+
+        # I'm using ANY as matching the exception object is not easy
+        # and I don't feel it's essential to test it in detail.
+        handler.logger.error.assert_called_once_with(
+            "Failed to send event to eventbus", exception=ANY
+        )
