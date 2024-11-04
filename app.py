@@ -3,12 +3,12 @@
 
 import aws_cdk as cdk
 from decouple import config
-from eventbus_learning.infrastructure.stack import EventbusLearningStack
+from eventbus_learning.infrastructure.stack import EventBusLearningStack
 
 app = cdk.App()
-EventbusLearningStack(
+EventBusLearningStack(
     app,
-    "eventbus-learning",
+    "EventBusLearningStack",
     env=cdk.Environment(
         account=config("AWS_ACCOUNT_ID"), region=config("AWS_REGION")
     ),

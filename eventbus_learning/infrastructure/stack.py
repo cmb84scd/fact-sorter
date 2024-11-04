@@ -7,7 +7,7 @@ from aws_cdk import aws_sqs as sqs
 from constructs import Construct
 
 
-class EventbusLearningStack(Stack):
+class EventBusLearningStack(Stack):
     """Create resources for eventbus-learning stack."""
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
