@@ -53,6 +53,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: Deploy
     needs: [test, lint, bandit]
+    env:
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
     steps:
     - uses: cmb84scd/python-action@v1
     - uses: actions/setup-node@v4
