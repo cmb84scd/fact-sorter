@@ -55,5 +55,10 @@ jobs:
     needs: [test, lint, bandit]
     steps:
     - uses: cmb84scd/python-action@v1
-    - name: Print out secret
-      run: echo "My secret:\ ${{ secrets }}"
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - name: Install CDK
+      run: npm install -g aws-cdk
+    - name: Synthesize CDK
+      run: cdk synth
