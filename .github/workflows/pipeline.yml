@@ -56,4 +56,4 @@ jobs:
     steps:
     - uses: cmb84scd/python-action@v1
     - name: Print out secret
-      run: echo "My secret:\ ${{ secrets.MY_SECRET }}"
+      run: echo "My secret:\ ${{ secrets }}"
