@@ -56,6 +56,8 @@ jobs:
     env:
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
+    permissions:
+      id-token: write
     steps:
     - uses: cmb84scd/python-action@v1
     - uses: actions/setup-node@v4
