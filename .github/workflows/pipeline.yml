@@ -63,5 +63,10 @@ jobs:
         node-version: 20
     - name: Install CDK
       run: npm install -g aws-cdk
-    - name: Synthesize CDK
-      run: cdk synth
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ env.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_ROLE }}
+    - name: Bootstrap CDK
+      run: cdk bootstrap
