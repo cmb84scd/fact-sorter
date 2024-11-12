@@ -70,5 +70,5 @@ jobs:
       with:
         aws-region: ${{ env.AWS_REGION }}
         role-to-assume: ${{ secrets.AWS_ROLE }}
-    - name: Bootstrap CDK
-      run: cdk bootstrap
+    - name: Deploy stack
+      run: cdk deploy --require-approval=never
