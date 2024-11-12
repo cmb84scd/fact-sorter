@@ -71,4 +71,4 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
         role-to-assume: ${{ secrets.AWS_ROLE }}
     - name: Deploy stack
-      run: cdk deploy --require-approval=never
+      run: cdk deploy --require-approval=never --verbose
