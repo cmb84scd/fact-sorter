@@ -73,4 +73,5 @@ jobs:
     - name: Deploy stack
       run: |
         poetry export --without-hashes -f requirements.txt -o requirements.txt
-        poetry run cdk deploy --require-approval=never
+        cdk synth
+        # cdk deploy --require-approval=never
