@@ -18,5 +18,6 @@
     "reports",
     ".coverage",
     ".git"
-  ]
+  ],
+  "build": "poetry install --no-root"
 }
