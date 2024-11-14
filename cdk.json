@@ -2,7 +2,12 @@
   "app": "poetry run python app.py",
   "watch": {
     "include": [
-      "**/*.py"
+      "app.py",
+      "pyproject.toml",
+      "poetry.lock",
+      "requirements.txt",
+      "README.md",
+      "eventbus_learning/"
     ],
     "exclude": [
       "cdk.out",
