@@ -74,4 +74,4 @@ jobs:
       run: |
         poetry export --without-hashes -f requirements.txt -o requirements.txt
         cdk synth
-        # cdk deploy --require-approval=never
+        cdk deploy --require-approval=never
