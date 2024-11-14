@@ -5,13 +5,15 @@
       "**/*.py"
     ],
     "exclude": [
-      "README.md",
-      "cdk*.json",
-      "requirements*.txt",
+      "cdk.out",
       "source.bat",
-      "**/__init__.py",
       "**/__pycache__/*",
-      "tests"
+      ".pytest_cache",
+      "tests",
+      ".ruff_cache",
+      "reports",
+      ".coverage",
+      ".git"
     ]
   }
 }
