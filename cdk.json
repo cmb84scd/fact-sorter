@@ -19,5 +19,5 @@
     ".coverage",
     ".git"
   ],
-  "build": "poetry install --no-root"
+  "build": "poetry install"
 }
