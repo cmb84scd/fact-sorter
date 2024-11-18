@@ -18,6 +18,5 @@
     "reports",
     ".coverage",
     ".git"
-  ],
-  "build": "poetry install"
+  ]
 }

@@ -72,8 +72,6 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE }}
     - name: Deploy stack
       run: |
-        poetry env list
+        just install
         poetry export --without-hashes -f requirements.txt -o requirements.txt
-        ls
-        cdk synth
         cdk deploy --require-approval=never
