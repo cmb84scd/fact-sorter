@@ -72,6 +72,7 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE }}
     - name: Deploy stack
       run: |
-        just install
-        poetry export --without-hashes -f requirements.txt -o requirements.txt
+        poetry build
+        pip install --upgrade -t package dist/eventbus_learning-0.1.0-py3-none-any.whl
+        zip -r package.zip package
         cdk deploy --require-approval=never
