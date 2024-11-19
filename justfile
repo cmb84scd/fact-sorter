@@ -35,3 +35,9 @@ test:
 @test-cov:
     poetry run coverage run && poetry run coverage report
     poetry run coverage html && poetry run coverage xml --fail-under=95
+
+build:
+    poetry build
+    pip install --upgrade -t package dist/eventbus_learning-0.1.0-py3-none-any.whl
+    zip -r package.zip package
+    rm -r dist package

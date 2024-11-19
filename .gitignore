@@ -3,6 +3,7 @@ __pycache__/
 reports/
 .env
 cdk.out/
+package.zip
 
 # IDE
 .vscode

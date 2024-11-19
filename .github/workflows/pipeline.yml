@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: cmb84scd/python-action@v1
+    - name: Build package zip file
+      run: just build
     - name: Run tests
       run: just test-cov
     - name: Code Coverage Summary Report
@@ -72,7 +74,5 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE }}
     - name: Deploy stack
       run: |
-        poetry build
-        pip install --upgrade -t package dist/eventbus_learning-0.1.0-py3-none-any.whl
-        zip -r package.zip package
+        just build
         cdk deploy --require-approval=never
