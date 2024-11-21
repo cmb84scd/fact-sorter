@@ -19,9 +19,9 @@ class EventBusLearningStack(Stack):
         lambda_.Function(
             self,
             "GetFactFunction",
-            code=lambda_.Code.from_asset("package.zip"),
+            code=lambda_.Code.from_asset("package"),
             dead_letter_queue=dlq,
-            handler="get_fact.handler",
+            handler="eventbus_learning.application.get_fact.handler",
             runtime=lambda_.Runtime.PYTHON_3_12,
         )
 

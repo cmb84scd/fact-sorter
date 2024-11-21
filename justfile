@@ -39,6 +39,4 @@ test:
 build:
     poetry build
     pip install --upgrade -t package dist/eventbus_learning-0.1.0-py3-none-any.whl
-    cp -r eventbus_learning/application/* package
-    zip -r package.zip package
-    rm -r dist package
+    rm -r dist

@@ -22,7 +22,7 @@ class TestEventBusLearningStack:
         template.has_resource_properties(
             "AWS::Lambda::Function",
             lambda_properties(
-                "get_fact.handler",
+                "eventbus_learning.application.get_fact.handler",
                 list(dlq)[0],
                 dependency_capture,
             ),
