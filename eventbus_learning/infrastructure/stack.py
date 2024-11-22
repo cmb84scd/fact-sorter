@@ -2,6 +2,7 @@
 
 from aws_cdk import Stack
 from aws_cdk import aws_events as events
+from aws_cdk import aws_iam as iam
 from aws_cdk import aws_lambda as lambda_
 from aws_cdk import aws_sqs as sqs
 from constructs import Construct
@@ -20,7 +21,7 @@ class EventBusLearningStack(Stack):
             self, "AnimalFactBus", event_bus_name="animal_fact_bus"
         )
 
-        lambda_.Function(
+        get_fact_lambda = lambda_.Function(
             self,
             "GetFactFunction",
             code=lambda_.Code.from_asset("package"),
@@ -28,6 +29,13 @@ class EventBusLearningStack(Stack):
             handler="eventbus_learning.application.get_fact.handler",
             runtime=lambda_.Runtime.PYTHON_3_12,
             environment={"EVENT_BUS_ARN": fact_bus.event_bus_arn},
+        )
+
+        get_fact_lambda.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=["events:PutEvents"],
+                resources=[fact_bus.event_bus_arn],
+            )
         )
 
         events.Rule(
