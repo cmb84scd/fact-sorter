@@ -54,7 +54,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: Deploy
-    needs: [test, lint, bandit]
+    needs: [test, lint, bandit, safety]
     env:
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
