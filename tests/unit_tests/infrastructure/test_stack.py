@@ -19,12 +19,14 @@ class TestEventBusLearningStack:
     def test_get_fact_lambda_has_correct_properties(self):
         dependency_capture = Capture()
         dlq = template.find_resources("AWS::SQS::Queue").keys()
+        event_bus_arn = template.find_resources("AWS::Events::EventBus").keys()
         template.has_resource_properties(
             "AWS::Lambda::Function",
             lambda_properties(
                 "eventbus_learning.application.get_fact.handler",
                 list(dlq)[0],
                 dependency_capture,
+                list(event_bus_arn)[0],
             ),
         )
 

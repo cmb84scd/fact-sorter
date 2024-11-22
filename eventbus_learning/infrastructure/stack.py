@@ -16,6 +16,10 @@ class EventBusLearningStack(Stack):
 
         dlq = sqs.Queue(self, "GetFactDLQ")
 
+        fact_bus = events.EventBus(
+            self, "AnimalFactBus", event_bus_name="animal_fact_bus"
+        )
+
         lambda_.Function(
             self,
             "GetFactFunction",
@@ -23,10 +27,7 @@ class EventBusLearningStack(Stack):
             dead_letter_queue=dlq,
             handler="eventbus_learning.application.get_fact.handler",
             runtime=lambda_.Runtime.PYTHON_3_12,
-        )
-
-        fact_bus = events.EventBus(
-            self, "AnimalFactBus", event_bus_name="animal_fact_bus"
+            environment={"EVENT_BUS_ARN": fact_bus.event_bus_arn},
         )
 
         events.Rule(
