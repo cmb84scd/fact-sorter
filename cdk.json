@@ -1,17 +1,22 @@
 {
   "app": "poetry run python app.py",
-  "watch": {
-    "include": [
-      "**/*.py"
-    ],
-    "exclude": [
-      "README.md",
-      "cdk*.json",
-      "requirements*.txt",
-      "source.bat",
-      "**/__init__.py",
-      "**/__pycache__/*",
-      "tests"
-    ]
-  }
+  "include": [
+    "app.py",
+    "pyproject.toml",
+    "poetry.lock",
+    "requirements.txt",
+    "README.md",
+    "eventbus_learning/"
+  ],
+  "exclude": [
+    "cdk.out",
+    "source.bat",
+    "**/__pycache__/*",
+    ".pytest_cache",
+    "tests",
+    ".ruff_cache",
+    "reports",
+    ".coverage",
+    ".git"
+  ]
 }

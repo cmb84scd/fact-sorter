@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: cmb84scd/python-action@v1
+    - name: Build package
+      run: just build
     - name: Run tests
       run: just test-cov
     - name: Code Coverage Summary Report
@@ -48,3 +50,29 @@ jobs:
     - uses: pyupio/safety-action@v1
       with:
         api-key: ${{ secrets.SAFETY_API_KEY }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Deploy
+    needs: [test, lint, bandit, safety]
+    env:
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+    permissions:
+      id-token: write
+    steps:
+    - uses: cmb84scd/python-action@v1
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - name: Install CDK
+      run: npm install -g aws-cdk
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ env.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_ROLE }}
+    - name: Deploy stack
+      run: |
+        just build
+        cdk deploy --require-approval=never
