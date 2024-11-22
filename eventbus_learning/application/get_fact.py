@@ -1,16 +1,16 @@
 """Get an animal fact and put it onto the eventbus."""
 
 import logging
+import os
 
 import boto3
 import requests
-from decouple import config
 
 
 class GetFactFunction:
     """Get an animal fact and put it onto the eventbus."""
 
-    EVENT_BUS_ARN = config("EVENT_BUS_ARN")
+    EVENT_BUS_ARN = os.environ["EVENT_BUS_ARN"]
 
     events_client = boto3.client("events")
 
