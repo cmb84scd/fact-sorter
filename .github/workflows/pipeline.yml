@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: cmb84scd/python-action@v1
-    - name: Build package zip file
+    - name: Build package
       run: just build
     - name: Run tests
       run: just test-cov
