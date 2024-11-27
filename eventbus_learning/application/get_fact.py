@@ -1,24 +1,19 @@
 """Get an animal fact and put it onto the eventbus."""
 
-import logging
 import os
 
 import boto3
 import requests
 
+from eventbus_learning.application.base.handler import BaseHandler
 
-class GetFactFunction:
+
+class GetFactFunction(BaseHandler):
     """Get an animal fact and put it onto the eventbus."""
 
     EVENT_BUS_ARN = os.environ["EVENT_BUS_ARN"]
 
     events_client = boto3.client("events")
-
-    def __init__(self, event, context):
-        """Store the event and context, and set up the logger."""
-        self.context = context
-        self.event = event
-        self.logger = logging.getLogger().setLevel(logging.INFO)
 
     def execute(self):
         """Put the fact onto the eventbus."""
@@ -58,4 +53,4 @@ class GetFactFunction:
             raise e
 
 
-handler = GetFactFunction.execute
+handler = GetFactFunction.handler
