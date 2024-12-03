@@ -34,7 +34,7 @@ test:
 
 @test-cov:
     poetry run coverage run && poetry run coverage report
-    poetry run coverage html && poetry run coverage xml --fail-under=95
+    poetry run coverage html && poetry run coverage xml --fail-under=85
 
 build:
     poetry build

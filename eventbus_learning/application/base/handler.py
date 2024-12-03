@@ -1,7 +1,8 @@
 """Lambda base class."""
 
-import logging
 from abc import ABC, abstractmethod
+
+from eventbus_learning.application.base.logger import Logger
 
 
 class BaseHandler(ABC):
@@ -11,7 +12,7 @@ class BaseHandler(ABC):
         """Initialize the handler."""
         self.event = event
         self.context = context
-        self.logger = logging.getLogger().setLevel(logging.INFO)
+        self.logger = Logger()
 
     @abstractmethod
     def execute(self):
