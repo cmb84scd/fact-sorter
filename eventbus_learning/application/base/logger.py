@@ -7,6 +7,14 @@ import traceback
 logging.getLogger().setLevel(logging.INFO)
 
 
+def default_serializer(value):
+    """Serialize provided value to string."""
+    try:
+        return str(value)
+    except Exception:
+        return "Unable to serialize to JSON log"
+
+
 class Logger:
     """Format log records as JSON."""
 
@@ -34,4 +42,4 @@ class Logger:
                 "traceback": traceback.format_exc(),
             }
 
-        return json.dumps(log)
+        return json.dumps(log, default=default_serializer)
