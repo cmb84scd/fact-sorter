@@ -42,9 +42,14 @@ class Logger:
             log["data"] = data
 
         if exception is not None:
-            log["exception"] = {
-                "type": type(exception).__name__,
-                "traceback": traceback.format_exc(),
-            }
+            log["exception"] = self.create_exception_dict(exception)
 
         return json.dumps(log, default=default_serializer)
+
+    @staticmethod
+    def create_exception_dict(exception):
+        """Create a standard format dict for logging an error."""
+        return {
+            "type": type(exception).__name__,
+            "traceback": traceback.format_exc(),
+        }
