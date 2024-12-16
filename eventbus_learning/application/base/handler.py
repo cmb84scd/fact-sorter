@@ -23,6 +23,11 @@ class BaseHandler(ABC):
         subclasses.
         """
 
+    def handle_exception(self, err):
+        """Log exceptions that occur in execute."""
+        self.logger.error("Unhandled exception occurred", exception=err)
+        raise err
+
     @classmethod
     def handler(cls, event, context):
         """
@@ -32,5 +37,11 @@ class BaseHandler(ABC):
         instance of the handler and call the execute method.
         """
         handler = cls(event, context)
-        response = handler.execute()
+
+        try:
+            response = handler.execute()
+        except Exception as e:
+            response = handler.handle_exception(e)
+
+        handler.logger.info("Returning response", response)
         return response
