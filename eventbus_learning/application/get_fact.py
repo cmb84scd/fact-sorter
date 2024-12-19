@@ -32,8 +32,9 @@ class GetFactFunction(BaseHandler):
 
     def get_fact(self):
         """Get an animal fact and remove id from response."""
+        url = "https://electrical-adelind-catriona-e33e053b.koyeb.app/facts"
         try:
-            response = requests.get("http://127.0.0.1:8000/facts", timeout=5)
+            response = requests.get(url, timeout=5)
             response.raise_for_status()
             res = response.json()
             res.pop("id")

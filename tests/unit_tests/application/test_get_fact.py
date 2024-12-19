@@ -6,7 +6,7 @@ from botocore.stub import Stubber
 from eventbus_learning.application.base.logger import Logger
 from eventbus_learning.application.get_fact import GetFactFunction
 
-URL = "http://127.0.0.1:8000/facts"
+URL = "https://electrical-adelind-catriona-e33e053b.koyeb.app/facts"
 
 
 class TestHandler:
