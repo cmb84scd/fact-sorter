@@ -31,6 +31,7 @@ class TestEventBusLearningStack:
         )
 
         assert "GetFactFunctionServiceRole" in dependency_capture.as_string()
+        assert "GetFactDLQ" in list(dlq)[0]
 
     def test_get_fact_lambda_has_correct_iam_role(self):
         role_capture = Capture()
