@@ -1,24 +1,19 @@
 """Get an animal fact and put it onto the eventbus."""
 
-import logging
+import os
 
 import boto3
 import requests
-from decouple import config
+
+from eventbus_learning.application.base.handler import BaseHandler
 
 
-class GetFactFunction:
+class GetFactFunction(BaseHandler):
     """Get an animal fact and put it onto the eventbus."""
 
-    EVENT_BUS_ARN = config("EVENT_BUS_ARN")
+    EVENT_BUS_ARN = os.environ["EVENT_BUS_ARN"]
 
     events_client = boto3.client("events")
-
-    def __init__(self, event, context):
-        """Store the event and context, and set up the logger."""
-        self.context = context
-        self.event = event
-        self.logger = logging.getLogger().setLevel(logging.INFO)
 
     def execute(self):
         """Put the fact onto the eventbus."""
@@ -37,8 +32,9 @@ class GetFactFunction:
 
     def get_fact(self):
         """Get an animal fact and remove id from response."""
+        url = "https://electrical-adelind-catriona-e33e053b.koyeb.app/facts"
         try:
-            response = requests.get("http://127.0.0.1:8000/facts", timeout=5)
+            response = requests.get(url, timeout=5)
             response.raise_for_status()
             res = response.json()
             res.pop("id")
@@ -58,4 +54,4 @@ class GetFactFunction:
             raise e
 
 
-handler = GetFactFunction.execute
+handler = GetFactFunction.handler

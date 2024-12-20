@@ -1,19 +1,18 @@
-import logging
 from unittest.mock import ANY, MagicMock
 
 import pytest
 import requests
 from botocore.stub import Stubber
+from eventbus_learning.application.base.logger import Logger
 from eventbus_learning.application.get_fact import GetFactFunction
 
-URL = "http://127.0.0.1:8000/facts"
+URL = "https://electrical-adelind-catriona-e33e053b.koyeb.app/facts"
 
 
 class TestHandler:
     @pytest.fixture(autouse=True)
     def logger(self):
-        logger = logging.getLogger().setLevel(logging.INFO)
-        yield MagicMock(wraps=logger)
+        yield MagicMock(wraps=Logger())
 
     @pytest.fixture
     def handler(self, logger):

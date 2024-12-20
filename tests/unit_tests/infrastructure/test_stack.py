@@ -19,16 +19,19 @@ class TestEventBusLearningStack:
     def test_get_fact_lambda_has_correct_properties(self):
         dependency_capture = Capture()
         dlq = template.find_resources("AWS::SQS::Queue").keys()
+        event_bus_arn = template.find_resources("AWS::Events::EventBus").keys()
         template.has_resource_properties(
             "AWS::Lambda::Function",
             lambda_properties(
                 "eventbus_learning.application.get_fact.handler",
                 list(dlq)[0],
                 dependency_capture,
+                list(event_bus_arn)[0],
             ),
         )
 
         assert "GetFactFunctionServiceRole" in dependency_capture.as_string()
+        assert "GetFactDLQ" in list(dlq)[0]
 
     def test_get_fact_lambda_has_correct_iam_role(self):
         role_capture = Capture()
@@ -40,7 +43,7 @@ class TestEventBusLearningStack:
         assert "AWSLambdaBasicExecutionRole" in role_capture.as_string()
         assert "GetFactFunctionServiceRole" in list(role)[0]
 
-    def test_get_fact_lambda_has_correct_dlq_policy(self):
+    def test_get_fact_lambda_has_correct_policy(self):
         policy_capture = Capture()
         role = template.find_resources("AWS::IAM::Role").keys()
         policy = template.find_resources("AWS::IAM::Policy").keys()
