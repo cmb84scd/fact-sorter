@@ -43,5 +43,4 @@ class BaseHandler(ABC):
         except Exception as e:
             response = handler.handle_exception(e)
 
-        handler.logger.info("Returning response", response)
         return response
