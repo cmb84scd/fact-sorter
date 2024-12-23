@@ -1,5 +1,5 @@
 exclude = [".git", ".history", ".venv"]
-src = ["eventbus_learning"]
+src = ["eventbus_learning", "cdk"]
 
 target-version = "py312"
 line-length = 79
