@@ -4,7 +4,7 @@
 import os
 
 import aws_cdk as cdk
-from eventbus_learning.infrastructure.stack import EventBusLearningStack
+from cdk.eb_learning_stack import EventBusLearningStack
 
 app = cdk.App()
 EventBusLearningStack(
