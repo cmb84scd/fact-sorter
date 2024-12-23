@@ -15,7 +15,7 @@ class EventBusLearningStack(Stack):
         """Create resources for eventbus-learning stack."""
         super().__init__(scope, construct_id, **kwargs)
 
-        dlq = sqs.Queue(self, "GetFactDLQ")
+        get_fact_dlq = sqs.Queue(self, "GetFactDLQ")
 
         fact_bus = events.EventBus(
             self, "AnimalFactBus", event_bus_name="animal_fact_bus"
@@ -25,7 +25,7 @@ class EventBusLearningStack(Stack):
             self,
             "GetFactFunction",
             code=lambda_.Code.from_asset("package"),
-            dead_letter_queue=dlq,
+            dead_letter_queue=get_fact_dlq,
             handler="eventbus_learning.application.get_fact.handler",
             runtime=lambda_.Runtime.PYTHON_3_12,
             environment={"EVENT_BUS_ARN": fact_bus.event_bus_arn},

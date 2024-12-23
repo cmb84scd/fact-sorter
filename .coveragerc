@@ -1,5 +1,5 @@
 [run]
-source = eventbus_learning
+source = eventbus_learning, cdk
 command_line = -m pytest
 
 [report]
