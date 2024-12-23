@@ -2,7 +2,7 @@ from aws_cdk import App
 from aws_cdk.assertions import Capture, Template
 from cdk.eb_learning_stack import EventBusLearningStack
 
-from ..factories import iam_role_properties, lambda_properties
+from .factories import iam_role_properties, lambda_properties
 
 app = App()
 stack = EventBusLearningStack(app, "eventbus-learning")
