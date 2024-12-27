@@ -1,1 +1,1 @@
-"""Understand how eventbus and lambda work together."""
+"""Sort the facts."""
