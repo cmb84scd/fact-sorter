@@ -23,7 +23,7 @@ repos:
         name: bandit
         entry: just bandit
         language: system
-        files: (^\.bandit|^eventbus_learning/)$
+        files: (^\.bandit|^fact_sorter/)$
         pass_filenames: false
       - id: test
         name: test

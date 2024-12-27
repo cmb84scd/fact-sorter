@@ -3,8 +3,8 @@ from unittest.mock import ANY, MagicMock
 import pytest
 import requests
 from botocore.stub import Stubber
-from eventbus_learning.application.base.logger import Logger
-from eventbus_learning.application.get_fact import GetFactFunction
+from fact_sorter.application.base.logger import Logger
+from fact_sorter.application.get_fact import GetFactFunction
 
 URL = "https://electrical-adelind-catriona-e33e053b.koyeb.app/facts"
 

@@ -5,7 +5,7 @@ import os
 import boto3
 import requests
 
-from eventbus_learning.application.base.handler import BaseHandler
+from fact_sorter.application.base.handler import BaseHandler
 
 
 class GetFactFunction(BaseHandler):

@@ -1,5 +1,5 @@
 [run]
-source = eventbus_learning, cdk
+source = fact_sorter, cdk
 command_line = -m pytest
 
 [report]

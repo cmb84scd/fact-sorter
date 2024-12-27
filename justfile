@@ -38,5 +38,5 @@ test:
 
 build:
     poetry build
-    pip install --upgrade -t package dist/eventbus_learning-0.1.0-py3-none-any.whl
+    pip install --upgrade -t package dist/fact_sorter-0.1.0-py3-none-any.whl
     rm -r dist
