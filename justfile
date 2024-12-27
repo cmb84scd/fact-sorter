@@ -24,7 +24,7 @@ format-fix:
     poetry run ruff format
 
 bandit:
-    poetry run bandit -r eventbus_learning -q
+    poetry run bandit -r fact_sorter -q
 
 safety:
     poetry run safety scan
