@@ -8,11 +8,11 @@ from aws_cdk import aws_sqs as sqs
 from constructs import Construct
 
 
-class EventBusLearningStack(Stack):
-    """Create resources for eventbus-learning stack."""
+class FactSorterStack(Stack):
+    """Create resources for Fact Sorter stack."""
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
-        """Create resources for eventbus-learning stack."""
+        """Create resources for Fact Sorter stack."""
         super().__init__(scope, construct_id, **kwargs)
 
         get_fact_dlq = sqs.Queue(self, "GetFactDLQ")
@@ -26,7 +26,7 @@ class EventBusLearningStack(Stack):
             "GetFactFunction",
             code=lambda_.Code.from_asset("package"),
             dead_letter_queue=get_fact_dlq,
-            handler="eventbus_learning.application.get_fact.handler",
+            handler="fact_sorter.application.get_fact.handler",
             runtime=lambda_.Runtime.PYTHON_3_12,
             environment={"EVENT_BUS_ARN": fact_bus.event_bus_arn},
         )

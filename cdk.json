@@ -6,7 +6,7 @@
     "poetry.lock",
     "requirements.txt",
     "README.md",
-    "eventbus_learning/"
+    "fact_sorter/"
   ],
   "exclude": [
     "cdk.out",
