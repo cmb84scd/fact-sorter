@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "eventbus-learning"
+name = "fact-sorter"
 version = "0.1.0"
-description = "Simple Eventbus project for learning purposes."
+description = "Stack that sorts facts."
 authors = ["Catriona Bennett <catrionamairi@blueyonder.co.uk>"]
 readme = "README.md"
 

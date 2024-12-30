@@ -24,7 +24,7 @@ format-fix:
     poetry run ruff format
 
 bandit:
-    poetry run bandit -r eventbus_learning -q
+    poetry run bandit -r fact_sorter -q
 
 safety:
     poetry run safety scan
@@ -38,5 +38,5 @@ test:
 
 build:
     poetry build
-    pip install --upgrade -t package dist/eventbus_learning-0.1.0-py3-none-any.whl
+    pip install --upgrade -t package dist/fact_sorter-0.1.0-py3-none-any.whl
     rm -r dist

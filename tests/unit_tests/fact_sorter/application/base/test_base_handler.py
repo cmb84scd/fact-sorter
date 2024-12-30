@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 import pytest
-from eventbus_learning.application.base.handler import BaseHandler
+from fact_sorter.application.base.handler import BaseHandler
 
 
 class SomeHandler(BaseHandler):
@@ -12,7 +12,7 @@ class SomeHandler(BaseHandler):
 class TestBaseHandler:
     @pytest.fixture
     def mock_logger_class(self):
-        logger_path = "eventbus_learning.application.base.handler.Logger"
+        logger_path = "fact_sorter.application.base.handler.Logger"
 
         with patch(logger_path, autospec=True) as mocked_logger:
             yield mocked_logger

@@ -3,9 +3,9 @@ from datetime import datetime
 from unittest.mock import ANY, patch
 
 import pytest
-from eventbus_learning.application.base import logger as lambda_logger
+from fact_sorter.application.base import logger as lambda_logger
 
-logging_path = "eventbus_learning.application.base.logger.logging"
+logging_path = "fact_sorter.application.base.logger.logging"
 
 
 class NotStringable:

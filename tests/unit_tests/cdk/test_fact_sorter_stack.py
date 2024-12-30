@@ -1,15 +1,15 @@
 from aws_cdk import App
 from aws_cdk.assertions import Capture, Template
-from cdk.eb_learning_stack import EventBusLearningStack
+from cdk.fact_sorter_stack import FactSorterStack
 
 from .factories import iam_role_properties, lambda_properties
 
 app = App()
-stack = EventBusLearningStack(app, "eventbus-learning")
+stack = FactSorterStack(app, "fact-sorter")
 template = Template.from_stack(stack)
 
 
-class TestEventBusLearningStack:
+class TestFactSorterStack:
     def test_resources_created(self):
         template.resource_count_is("AWS::Lambda::Function", 1)
         template.resource_count_is("AWS::Events::EventBus", 1)
@@ -23,7 +23,7 @@ class TestEventBusLearningStack:
         template.has_resource_properties(
             "AWS::Lambda::Function",
             lambda_properties(
-                "eventbus_learning.application.get_fact.handler",
+                "fact_sorter.application.get_fact.handler",
                 list(dlq)[0],
                 dependency_capture,
                 list(event_bus_arn)[0],

@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 
-from eventbus_learning.application.base.logger import Logger
+from fact_sorter.application.base.logger import Logger
 
 
 class BaseHandler(ABC):
