@@ -16,7 +16,9 @@ class TestFactSorterStack:
         template.resource_count_is("AWS::Events::Rule", 1)
         template.resource_count_is("AWS::SQS::Queue", 1)
 
-    def test_get_fact_lambda_has_correct_properties(self):
+
+class TestGetFactLambda:
+    def test_lambda_has_correct_properties(self):
         dependency_capture = Capture()
         dlq = template.find_resources("AWS::SQS::Queue").keys()
         event_bus_arn = template.find_resources("AWS::Events::EventBus").keys()
@@ -33,7 +35,7 @@ class TestFactSorterStack:
         assert "GetFactFunctionServiceRole" in dependency_capture.as_string()
         assert "GetFactDLQ" in list(dlq)[0]
 
-    def test_get_fact_lambda_has_correct_iam_role(self):
+    def test_lambda_has_correct_iam_role(self):
         role_capture = Capture()
         role = template.find_resources("AWS::IAM::Role").keys()
         template.has_resource_properties(
@@ -43,7 +45,7 @@ class TestFactSorterStack:
         assert "AWSLambdaBasicExecutionRole" in role_capture.as_string()
         assert "GetFactFunctionServiceRole" in list(role)[0]
 
-    def test_get_fact_lambda_has_correct_policy(self):
+    def test_lambda_has_correct_policy(self):
         policy_capture = Capture()
         role = template.find_resources("AWS::IAM::Role").keys()
         policy = template.find_resources("AWS::IAM::Policy").keys()
@@ -56,6 +58,8 @@ class TestFactSorterStack:
             },
         )
 
+
+class TestEventbus:
     def test_eventbus_has_correct_properties(self):
         template.has_resource_properties(
             "AWS::Events::EventBus",
@@ -75,7 +79,9 @@ class TestFactSorterStack:
             },
         )
 
-    def test_cat_fact_lambda_has_correct_properties(self):
+
+class TestCatFactLambda:
+    def test_lambda_has_correct_properties(self):
         dependency_capture = Capture()
         template.has_resource_properties(
             "AWS::Lambda::Function",
@@ -87,7 +93,7 @@ class TestFactSorterStack:
 
         assert "CatFactFunctionServiceRole" in dependency_capture.as_string()
 
-    def test_cat_fact_lambda_has_correct_iam_role(self):
+    def test_lambda_has_correct_iam_role(self):
         role_capture = Capture()
         role = template.find_resources("AWS::IAM::Role").keys()
         template.has_resource_properties(
