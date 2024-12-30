@@ -46,3 +46,11 @@ class FactSorterStack(Stack):
                 source=["aws.lambda"],
             ),
         )
+
+        lambda_.Function(
+            self,
+            "CatFactFunction",
+            code=lambda_.Code.from_asset("package"),
+            handler="fact_sorter.application.cat_fact.handler",
+            runtime=lambda_.Runtime.PYTHON_3_12,
+        )

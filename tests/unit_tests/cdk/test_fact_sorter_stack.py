@@ -11,7 +11,7 @@ template = Template.from_stack(stack)
 
 class TestFactSorterStack:
     def test_resources_created(self):
-        template.resource_count_is("AWS::Lambda::Function", 1)
+        template.resource_count_is("AWS::Lambda::Function", 2)
         template.resource_count_is("AWS::Events::EventBus", 1)
         template.resource_count_is("AWS::Events::Rule", 1)
         template.resource_count_is("AWS::SQS::Queue", 1)
@@ -24,8 +24,8 @@ class TestFactSorterStack:
             "AWS::Lambda::Function",
             lambda_properties(
                 "fact_sorter.application.get_fact.handler",
-                list(dlq)[0],
                 dependency_capture,
+                list(dlq)[0],
                 list(event_bus_arn)[0],
             ),
         )
@@ -74,3 +74,25 @@ class TestFactSorterStack:
                 "State": "ENABLED",
             },
         )
+
+    def test_cat_fact_lambda_has_correct_properties(self):
+        dependency_capture = Capture()
+        template.has_resource_properties(
+            "AWS::Lambda::Function",
+            lambda_properties(
+                "fact_sorter.application.cat_fact.handler",
+                dependency_capture,
+            ),
+        )
+
+        assert "CatFactFunctionServiceRole" in dependency_capture.as_string()
+
+    def test_cat_fact_lambda_has_correct_iam_role(self):
+        role_capture = Capture()
+        role = template.find_resources("AWS::IAM::Role").keys()
+        template.has_resource_properties(
+            "AWS::IAM::Role", iam_role_properties(role_capture)
+        )
+
+        assert "AWSLambdaBasicExecutionRole" in role_capture.as_string()
+        assert "CatFactFunctionServiceRole" in list(role)[1]

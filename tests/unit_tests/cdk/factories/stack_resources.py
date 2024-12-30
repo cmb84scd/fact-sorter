@@ -1,13 +1,17 @@
 from aws_cdk.assertions import Match
 
 
-def lambda_properties(handler, dlq_name, dep_capture, env=None):
+def lambda_properties(handler, dep_capture, dlq_name=None, env=None):
     properties = {
-        "DeadLetterConfig": {"TargetArn": {"Fn::GetAtt": [dlq_name, "Arn"]}},
         "Handler": handler,
         "Role": {"Fn::GetAtt": [dep_capture, "Arn"]},
         "Runtime": "python3.12",
     }
+
+    if dlq_name is not None:
+        properties["DeadLetterConfig"] = {
+            "TargetArn": {"Fn::GetAtt": [dlq_name, "Arn"]}
+        }
 
     if env is not None:
         properties["Environment"] = {
