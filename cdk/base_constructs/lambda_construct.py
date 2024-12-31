@@ -20,7 +20,7 @@ class LambdaConstruct(Construct):
         """AWS base lambda construct."""
         super().__init__(scope, id, **kwargs)
 
-        base_lambda = lambda_.Function(
+        self.function = lambda_.Function(
             self,
             id,
             code=lambda_.Code.from_asset("package"),
@@ -31,8 +31,8 @@ class LambdaConstruct(Construct):
 
         if environment is not None:
             for k, v in environment.items():
-                base_lambda.add_environment(k, v)
+                self.function.add_environment(k, v)
 
         if policy is not None:
             for p in policy:
-                base_lambda.add_to_role_policy(p)
+                self.function.add_to_role_policy(p)

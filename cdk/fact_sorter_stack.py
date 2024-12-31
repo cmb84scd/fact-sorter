@@ -2,6 +2,7 @@
 
 from aws_cdk import Stack
 from aws_cdk import aws_events as events
+from aws_cdk import aws_events_targets as targets
 from aws_cdk import aws_iam as iam
 from aws_cdk import aws_sqs as sqs
 from constructs import Construct
@@ -41,20 +42,23 @@ class FactSorterStack(Stack):
             policy=[get_fact_policy],
         )
 
-        events.Rule(
-            self,
-            "AnimalFactRule",
-            event_bus=fact_bus,
-            event_pattern=events.EventPattern(
-                source=["aws.lambda"],
-            ),
-        )
-
         cat_fact_dlq = sqs.Queue(self, "CatFactDLQ")
 
-        LambdaConstruct(
+        cat_fact_lambda = LambdaConstruct(
             self,
             "CatFactFunction",
             handler="fact_sorter.application.cat_fact.handler",
             dead_letter_queue=cat_fact_dlq,
+        )
+
+        events.Rule(
+            self,
+            "CatFactRule",
+            event_bus=fact_bus,
+            event_pattern=events.EventPattern(
+                source=["aws.lambda"],
+                detail_type=["fact.retrieved"],
+                detail={"animal_type": ["cat"]},
+            ),
+            targets=[targets.LambdaFunction(handler=cat_fact_lambda.function)],
         )
