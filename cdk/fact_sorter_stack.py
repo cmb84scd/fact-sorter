@@ -16,8 +16,13 @@ class FactSorterStack(Stack):
         """Create resources for Fact Sorter stack."""
         super().__init__(scope, id, **kwargs)
 
+        fact_bus_dlq = sqs.Queue(self, "AnimalFactBusDLQ")
+
         fact_bus = events.EventBus(
-            self, "AnimalFactBus", event_bus_name="animal_fact_bus"
+            self,
+            "AnimalFactBus",
+            event_bus_name="animal_fact_bus",
+            dead_letter_queue=fact_bus_dlq,
         )
 
         get_fact_policy = iam.PolicyStatement(

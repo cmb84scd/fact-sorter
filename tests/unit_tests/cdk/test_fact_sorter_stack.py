@@ -14,7 +14,7 @@ class TestFactSorterStack:
         template.resource_count_is("AWS::Lambda::Function", 2)
         template.resource_count_is("AWS::Events::EventBus", 1)
         template.resource_count_is("AWS::Events::Rule", 1)
-        template.resource_count_is("AWS::SQS::Queue", 2)
+        template.resource_count_is("AWS::SQS::Queue", 3)
 
 
 class TestGetFactLambda:
@@ -27,13 +27,13 @@ class TestGetFactLambda:
             lambda_properties(
                 "fact_sorter.application.get_fact.handler",
                 dependency_capture,
-                list(dlq)[0],
+                list(dlq)[1],
                 list(event_bus_arn)[0],
             ),
         )
 
         assert "GetFactFunctionServiceRole" in dependency_capture.as_string()
-        assert "GetFactDLQ" in list(dlq)[0]
+        assert "GetFactDLQ" in list(dlq)[1]
 
     def test_lambda_has_correct_iam_role(self):
         role_capture = Capture()
@@ -61,12 +61,18 @@ class TestGetFactLambda:
 
 class TestEventbus:
     def test_eventbus_has_correct_properties(self):
+        dlq = template.find_resources("AWS::SQS::Queue").keys()
         template.has_resource_properties(
             "AWS::Events::EventBus",
             {
                 "Name": "animal_fact_bus",
+                "DeadLetterConfig": {
+                    "Arn": {"Fn::GetAtt": [list(dlq)[0], "Arn"]}
+                },
             },
         )
+
+        assert "AnimalFactBusDLQ" in list(dlq)[0]
 
     def test_eventbus_rule_has_correct_properties(self):
         event_bus = template.find_resources("AWS::Events::EventBus").keys()
@@ -89,12 +95,12 @@ class TestCatFactLambda:
             lambda_properties(
                 "fact_sorter.application.cat_fact.handler",
                 dependency_capture,
-                list(dlq)[1],
+                list(dlq)[2],
             ),
         )
 
         assert "CatFactFunctionServiceRole" in dependency_capture.as_string()
-        assert "CatFactDLQ" in list(dlq)[1]
+        assert "CatFactDLQ" in list(dlq)[2]
 
     def test_lambda_has_correct_iam_role(self):
         role_capture = Capture()
