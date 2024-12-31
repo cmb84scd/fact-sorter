@@ -14,7 +14,7 @@ class TestFactSorterStack:
         template.resource_count_is("AWS::Lambda::Function", 2)
         template.resource_count_is("AWS::Events::EventBus", 1)
         template.resource_count_is("AWS::Events::Rule", 1)
-        template.resource_count_is("AWS::SQS::Queue", 1)
+        template.resource_count_is("AWS::SQS::Queue", 2)
 
 
 class TestGetFactLambda:
