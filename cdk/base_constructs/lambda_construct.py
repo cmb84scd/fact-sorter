@@ -1,4 +1,4 @@
-"""Construct for an AWS Lambda Function."""
+"""Base construct for an AWS Lambda Function."""
 
 from aws_cdk import aws_lambda as lambda_
 from constructs import Construct

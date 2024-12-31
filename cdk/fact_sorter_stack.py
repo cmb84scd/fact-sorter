@@ -6,7 +6,7 @@ from aws_cdk import aws_iam as iam
 from aws_cdk import aws_sqs as sqs
 from constructs import Construct
 
-from cdk.lambda_function import LambdaConstruct
+from cdk.base_constructs.lambda_construct import LambdaConstruct
 
 
 class FactSorterStack(Stack):
