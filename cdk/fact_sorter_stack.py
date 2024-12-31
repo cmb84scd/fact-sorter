@@ -28,7 +28,7 @@ class FactSorterStack(Stack):
 
         get_fact_dlq = sqs.Queue(self, "GetFactDLQ")
 
-        get_fact_lamb = LambdaConstruct(
+        get_fact_lambda = LambdaConstruct(
             self,
             "GetFactFunction",
             handler="fact_sorter.application.get_fact.handler",
@@ -36,7 +36,7 @@ class FactSorterStack(Stack):
             environment={"EVENT_BUS_ARN": fact_bus.event_bus_arn},
         )
 
-        get_fact_lamb.function.add_to_role_policy(
+        get_fact_lambda.function.add_to_role_policy(
             iam.PolicyStatement(
                 actions=["events:PutEvents"],
                 resources=[fact_bus.event_bus_arn],
