@@ -14,7 +14,6 @@ class LambdaConstruct(Construct):
         handler: str,
         dead_letter_queue: str,
         environment: dict = None,
-        policy: list = None,
         **kwargs,
     ) -> None:
         """AWS base lambda construct."""
@@ -32,7 +31,3 @@ class LambdaConstruct(Construct):
         if environment is not None:
             for k, v in environment.items():
                 self.function.add_environment(k, v)
-
-        if policy is not None:
-            for p in policy:
-                self.function.add_to_role_policy(p)
