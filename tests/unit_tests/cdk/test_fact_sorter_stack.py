@@ -83,15 +83,18 @@ class TestEventbus:
 class TestCatFactLambda:
     def test_lambda_has_correct_properties(self):
         dependency_capture = Capture()
+        dlq = template.find_resources("AWS::SQS::Queue").keys()
         template.has_resource_properties(
             "AWS::Lambda::Function",
             lambda_properties(
                 "fact_sorter.application.cat_fact.handler",
                 dependency_capture,
+                list(dlq)[1],
             ),
         )
 
         assert "CatFactFunctionServiceRole" in dependency_capture.as_string()
+        assert "CatFactDLQ" in list(dlq)[1]
 
     def test_lambda_has_correct_iam_role(self):
         role_capture = Capture()
