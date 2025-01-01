@@ -8,7 +8,8 @@ class CatFactFunction(BaseHandler):
 
     def execute(self):
         """Log out the cat fact."""
-        self.logger.info("Cat fact retrieved", self.event)
+        data = self.event["detail"]["fact"]
+        self.logger.info("Successfully collected cat fact", {"fact": data})
 
 
 handler = CatFactFunction.handler
