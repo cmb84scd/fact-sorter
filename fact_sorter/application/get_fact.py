@@ -1,5 +1,6 @@
 """Get an animal fact and put it onto the eventbus."""
 
+import json
 import os
 
 import boto3
@@ -20,7 +21,7 @@ class GetFactFunction(BaseHandler):
         try:
             fact = self.get_fact()
             event = {
-                "Detail": str(fact),
+                "Detail": json.dumps(fact),
                 "DetailType": "fact.retrieved",
                 "EventBusName": self.EVENT_BUS_ARN,
                 "Source": "GetFactFunction",

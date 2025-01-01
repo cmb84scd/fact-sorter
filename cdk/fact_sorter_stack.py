@@ -57,9 +57,9 @@ class FactSorterStack(Stack):
             "CatFactRule",
             event_bus=fact_bus,
             event_pattern=events.EventPattern(
-                source=["aws.lambda"],
+                source=["GetFactFunction"],
                 detail_type=["fact.retrieved"],
-                detail={"animal_type": ["cat"]},
+                detail={"animal": ["cat"]},
             ),
             targets=[targets.LambdaFunction(handler=cat_fact_lambda.function)],
         )

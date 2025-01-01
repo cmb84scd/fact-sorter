@@ -1,3 +1,4 @@
+import json
 from unittest.mock import ANY, MagicMock
 
 import pytest
@@ -71,8 +72,9 @@ class TestHandler:
 
     def test_puts_the_fact_on_the_event_bus(self, handler, events_stub):
         response = {"Entries": [{"EventId": "1"}], "FailedEntryCount": 0}
+        fact = {"animal": "cat", "fact": "A cat fact."}
         event = {
-            "Detail": "{'animal': 'cat', 'fact': 'A cat fact.'}",
+            "Detail": json.dumps(fact),
             "DetailType": "fact.retrieved",
             "EventBusName": handler.EVENT_BUS_ARN,
             "Source": "GetFactFunction",
@@ -83,9 +85,7 @@ class TestHandler:
 
         expected_info_log = ["Sending fact to eventbus", event]
 
-        handler.get_fact = MagicMock(
-            return_value={"animal": "cat", "fact": "A cat fact."}
-        )
+        handler.get_fact = MagicMock(return_value=fact)
         handler.execute()
 
         handler.logger.info.assert_called_once_with(*expected_info_log)

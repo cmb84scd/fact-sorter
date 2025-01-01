@@ -80,7 +80,7 @@ class TestEventbus:
             "AWS::Events::Rule",
             {
                 "EventBusName": {"Ref": list(event_bus)[0]},
-                "EventPattern": {"source": ["aws.lambda"]},
+                "EventPattern": {"source": ["GetFactFunction"]},
                 "State": "ENABLED",
             },
         )
