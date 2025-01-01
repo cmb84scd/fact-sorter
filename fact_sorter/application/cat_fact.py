@@ -3,7 +3,7 @@
 from fact_sorter.application.base.handler import BaseHandler
 
 
-class CatFactHandler(BaseHandler):
+class CatFactFunction(BaseHandler):
     """Handler to handle a cat fact."""
 
     def execute(self):
@@ -11,4 +11,4 @@ class CatFactHandler(BaseHandler):
         self.logger.info("Cat fact retrieved", self.event)
 
 
-handler = CatFactHandler.handler
+handler = CatFactFunction.handler
