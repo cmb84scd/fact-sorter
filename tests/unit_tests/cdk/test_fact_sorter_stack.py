@@ -76,12 +76,23 @@ class TestEventbus:
 
     def test_eventbus_rule_has_correct_properties(self):
         event_bus = template.find_resources("AWS::Events::EventBus").keys()
+        cat_fact_func = template.find_resources("AWS::Lambda::Function").keys()
         template.has_resource_properties(
             "AWS::Events::Rule",
             {
                 "EventBusName": {"Ref": list(event_bus)[0]},
-                "EventPattern": {"source": ["GetFactFunction"]},
+                "EventPattern": {
+                    "detail": {"animal": ["cat"]},
+                    "detail-type": ["fact.retrieved"],
+                    "source": ["GetFactFunction"],
+                },
                 "State": "ENABLED",
+                "Targets": [
+                    {
+                        "Arn": {"Fn::GetAtt": [list(cat_fact_func)[1], "Arn"]},
+                        "Id": "Target0",
+                    }
+                ],
             },
         )
 
