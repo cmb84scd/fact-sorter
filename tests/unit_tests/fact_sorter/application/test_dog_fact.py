@@ -30,11 +30,11 @@ class TestCatFactFunction:
             "time": "2023-01-01T00:00:00Z",
             "region": "an-aws-region",
             "resources": [],
-            "detail": {"animal": "dog", "fact": "Dogs bark"},
+            "detail": {"animal": "dog", "fact": "Dogs bark and a dog sniffs"},
         }
-        expected_data = {"fact": "Dogs bark"}
+        expected_data = {"dog count": 2, "fact": "Dogs bark and a dog sniffs"}
         handler.execute()
 
         handler.logger.info.assert_called_once_with(
-            "Successfully collected dog fact", expected_data
+            "The number of times 'dog' occurs in the fact", expected_data
         )

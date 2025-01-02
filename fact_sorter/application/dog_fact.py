@@ -9,7 +9,11 @@ class DogFactFunction(BaseHandler):
     def execute(self):
         """Log out the dog fact."""
         data = self.event["detail"]["fact"]
-        self.logger.info("Successfully collected dog fact", {"fact": data})
+        count = data.lower().count("dog")
+        self.logger.info(
+            "The number of times 'dog' occurs in the fact",
+            {"dog count": count, "fact": data},
+        )
 
 
 handler = DogFactFunction.handler
