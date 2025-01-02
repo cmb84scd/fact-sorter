@@ -1,3 +1,4 @@
+import pytest
 from aws_cdk import App, Stack
 from aws_cdk import aws_events as events
 from aws_cdk import aws_sqs as sqs
@@ -57,3 +58,18 @@ class TestLambdaConstruct:
                 list(event_bus_arn)[0],
             ),
         )
+
+    def test_construct_errors_when_required_params_are_missing(self):
+        app = App()
+        stack = Stack(app, "TestStack")
+
+        expected_message = (
+            r"LambdaConstruct.__init__\(\) missing 2 required positional "
+            r"arguments: 'handler' and 'dead_letter_queue'"
+        )
+
+        with pytest.raises(TypeError, match=expected_message):
+            LambdaConstruct(
+                stack,
+                "TestLambda",
+            )
