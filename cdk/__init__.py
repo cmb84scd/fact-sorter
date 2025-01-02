@@ -1,1 +1,1 @@
-"""This folder contains infrastructure code for the project."""
+"""This folder contains the cdk code for the project."""
