@@ -66,9 +66,21 @@ class FactSorterStack(Stack):
 
         dog_fact_dlq = sqs.Queue(self, "DogFactDLQ")
 
-        LambdaConstruct(
+        dog_fact_lambda = LambdaConstruct(
             self,
             "DogFactFunction",
             handler="fact_sorter.application.dog_fact.handler",
             dead_letter_queue=dog_fact_dlq,
+        )
+
+        events.Rule(
+            self,
+            "DogFactRule",
+            event_bus=fact_bus,
+            event_pattern=events.EventPattern(
+                source=["GetFactFunction"],
+                detail_type=["fact.retrieved"],
+                detail={"animal": ["dog"]},
+            ),
+            targets=[targets.LambdaFunction(handler=dog_fact_lambda.function)],
         )
