@@ -16,7 +16,7 @@ class LambdaConstruct(Construct):
         environment: dict = None,
         **kwargs,
     ) -> None:
-        """AWS base lambda construct."""
+        """Initialise AWS base lambda construct."""
         super().__init__(scope, id, **kwargs)
 
         self.function = lambda_.Function(
