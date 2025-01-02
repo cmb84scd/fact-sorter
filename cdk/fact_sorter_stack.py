@@ -63,3 +63,12 @@ class FactSorterStack(Stack):
             ),
             targets=[targets.LambdaFunction(handler=cat_fact_lambda.function)],
         )
+
+        dog_fact_dlq = sqs.Queue(self, "DogFactDLQ")
+
+        LambdaConstruct(
+            self,
+            "DogFactFunction",
+            handler="fact_sorter.application.dog_fact.handler",
+            dead_letter_queue=dog_fact_dlq,
+        )
