@@ -7,7 +7,7 @@ class DogFactFunction(BaseHandler):
     """Handler to handle a dog fact."""
 
     def execute(self):
-        """Log out the dog fact."""
+        """Log out dog count and fact."""
         data = self.event["detail"]["fact"]
         count = data.lower().count("dog")
         self.logger.info(

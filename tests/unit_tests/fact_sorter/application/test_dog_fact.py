@@ -20,7 +20,7 @@ class TestDogFactFunction:
 
         yield MockLoggerHandler(None, None)
 
-    def test_excute_logs_dog_fact(self, handler):
+    def test_excute_logs_dog_count_and_fact(self, handler):
         handler.event = {
             "version": "0",
             "id": "123abc456",
