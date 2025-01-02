@@ -5,7 +5,7 @@ from fact_sorter.application.base.logger import Logger
 from fact_sorter.application.dog_fact import DogFactFunction
 
 
-class TestCatFactFunction:
+class TestDogFactFunction:
     @pytest.fixture(autouse=True)
     def logger(self):
         yield MagicMock(wraps=Logger())
