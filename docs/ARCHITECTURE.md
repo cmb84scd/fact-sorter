@@ -57,6 +57,4 @@ This receives the dog facts, gets the fact from the event, counts how many times
 
 ## Service Architecture
 
-Even though they're not on the diagram, it should be noted that all the Functions, as well as the Event Bus, have an associated DLQ.
-
 ![Schema](architecture.jpg "Application Schema")
