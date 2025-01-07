@@ -7,6 +7,7 @@
   - [EventBridge Rules](#eventbridge-rules)
 - [Cat Fact Function](#cat-fact-function)
 - [Dog Fact Function](#dog-fact-function)
+- [Service Architecture](#service-architecture)
 
 ## Get Fact Function
 
